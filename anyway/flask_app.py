@@ -1633,4 +1633,10 @@ def infographics_data():
                                        'meta': {}}
     output['widgets'].append(injured_count_by_accident_year)
 
+    # injured count by age group
+    injured_count_by_age_group = {'name': 'injured_count_by_age_group',
+                                  'data': get_accidents_stats(table_obj=InvolvedMarkerView, filters=get_injured_filters(location_info), group_by='age_group_hebrew', count='age_group_hebrew', start_time=start_time, end_time=end_time),
+                                  'meta': {}}
+    output['widgets'].append(injured_count_by_age_group)
+
     return Response(json.dumps(output, default=str), mimetype="application/json")
