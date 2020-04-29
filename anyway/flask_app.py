@@ -1833,6 +1833,21 @@ def get_most_severe_accidents_table(location_info, start_time, end_time):
     return accidents
 
 
+def count_accidents_by_driver_type(data):
+    driver_types = defaultdict(int)
+    for item in data:
+        vehicle_type, count = item['involve_vehicle_type'], int(item['count'])
+        if vehicle_type in constants.PROFESSIONAL_DRIVER_VEHICLE_TYPES:
+            driver_types['professional_driver'] += count 
+        elif vehicle_type in constants.PRIVATE_DRIVER_VEHICLE_TYPES:
+            driver_types['private_vehicle_driver'] += count 
+        elif vehicle_type in constants.PEDESTRIAN_VEHICLES_TYPES:
+            driver_types['pedestrian_driver'] += count 
+        elif vehicle_type in constants.OTHER_VEHICLES_TYPES:
+            driver_types['other_driver'] += count 
+    return driver_types
+
+
 def convert_yyyy_mm_dd_to_dd_mm_yy(date):
     return '{}/{}/{}'.format(int(date[8:10]), int(date[5:7]), int(date[2:4]))
 
@@ -2024,6 +2039,11 @@ def infographics_data():
                                        'meta': {}}
     output['widgets'].append(accident_count_by_accident_year)
 
+    involved_by_vehicle_type_data =  get_accidents_stats(table_obj=InvolvedMarkerView, filters=get_injured_filters(location_info), group_by='involve_vehicle_type' , count='involve_vehicle_type' , start_time=start_time, end_time=end_time),
+    accident_count_by_driver_type = {'name': 'accident_count_by_drivers_type',
+                                     'data': count_accidents_by_driver_type(involved_by_vehicle_type_data), 
+                                     'meta': {}}
+    
     return Response(json.dumps(output, default=str), mimetype="application/json")
 
 

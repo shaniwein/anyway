@@ -25,6 +25,14 @@ class Constants(object):
 
     # other global constants (python only)
     DEFAULT_NUMBER_OF_YEARS_AGO = 5
+    
+    PROFESSIONAL_DRIVER_VEHICLE_TYPES = [2, 3, 4, 5, 6, 7, 11, 12, 13, 14, 18, 24, 25]
+    
+    PRIVATE_DRIVER_VEHICLE_TYPES = [1, 8, 9, 10, 19]
+    
+    PEDESTRIAN_VEHICLES_TYPES = [21, 22, 23]
+    
+    OTHER_VEHICLES_TYPES = [15, 16, 17]
 
     def __setattr__(self, *_):
         """
