@@ -2040,10 +2040,11 @@ def infographics_data():
     output['widgets'].append(accident_count_by_accident_year)
 
     involved_by_vehicle_type_data =  get_accidents_stats(table_obj=InvolvedMarkerView, filters=get_injured_filters(location_info), group_by='involve_vehicle_type' , count='involve_vehicle_type' , start_time=start_time, end_time=end_time),
-    accident_count_by_driver_type = {'name': 'accident_count_by_drivers_type',
+    accident_count_by_driver_type = {'name': 'accident_count_by_driver_type',
                                      'data': count_accidents_by_driver_type(involved_by_vehicle_type_data), 
                                      'meta': {}}
-    
+    output['widgets'].append(accident_count_by_driver_type)
+
     return Response(json.dumps(output, default=str), mimetype="application/json")
 
 
