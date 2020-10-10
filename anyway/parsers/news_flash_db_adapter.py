@@ -3,6 +3,7 @@ import logging
 import pandas as pd
 from flask_sqlalchemy import SQLAlchemy
 from anyway.parsers import infographics_data_cache_updater
+from anyway.parsers import news_flash_tags
 from anyway.parsers import timezones
 from anyway.models import NewsFlash
 
@@ -67,6 +68,7 @@ class DBAdapter:
         self.db.session.add(newsflash)
         self.db.session.commit()
         infographics_data_cache_updater.add_news_flash_to_cache(newsflash)
+        news_flash_tags.extract_and_save_tags(newsflash)
 
     def get_newsflash_by_id(self, id):
         return self.db.session.query(NewsFlash).filter(NewsFlash.id == id)
