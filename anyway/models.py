@@ -859,6 +859,26 @@ class NewsFlash(Base):
         return self.id
 
 
+class TagsList(Base):
+    __tablename__ = "tags_list"
+    id = Column(Integer(), primary_key=True, index=True)
+    tag_name = Column(Text(), primary_key=True, index=True)
+    tag_name_hebrew = Column(Text())
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "tag_name": self.tag_name,
+            "tag_name_hebrew": self.tag_name_hebrew,
+        }
+
+
+class NewsFlashTags(Base):
+    __tablename__ = "news_flash_tags"
+    news_flash_id = Column(Integer(), ForeignKey("NewsFlash.id"), primary_key=True)
+    tag_id = Column(Integer(), ForeignKey("TagsList.id"), primary_key=True)
+
+
 class City(Base):
     __tablename__ = "cities"
     id = Column(Integer(), primary_key=True)
